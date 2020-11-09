@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/KagisoMashigo/tinyappV2/issues"
   },
-  "homepage": "https://github.com/KagisoMashigo/tinyappV2#readme"
+  "homepage": "https://github.com/KagisoMashigo/tinyappV2#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
