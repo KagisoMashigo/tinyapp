@@ -31,11 +31,19 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);  // Log the POST request body to the console
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = req.body.longURL;
-  console.log(urlDatabase)
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
+});
+
+app.get("/u/:shortURL", (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  console.log(longURL) // this is a good example of how to get into the object
+  if (longURL) {
+    res.redirect(longURL);
+  } else {
+    res.status(404).send("404 - not found!");
+  }
 });
 
 app.get("/urls/:shortURL", (req, res) => {
