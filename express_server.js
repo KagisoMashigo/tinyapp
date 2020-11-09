@@ -24,8 +24,10 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase.shortURL };
-  res.render("urls_show", templateVars)
+  const shortURL = req.params.shortURL;
+  const templateVars = { shortURL: shortURL, longURL: urlDatabase[shortURL] };
+  // console.log(req.params.shortURL)
+  res.render("urls_show", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
@@ -33,5 +35,5 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`TinyApp listening on port ${PORT}!`);
 });
