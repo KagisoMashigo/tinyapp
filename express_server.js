@@ -42,13 +42,10 @@ app.post("/urls", (req, res) => {
 
 app.post("/login", (req, res) => {
   res.cookie('username', req.body.username)
-  console.log(req.body.username)
-  
   res.redirect("/urls")
 })
 
 app.post("/logout", (req, res) => { //need to clear the cookie and redirect to urls
-  // console.log(req.body.username)
   res.clearCookie("username", req.body.username)
   res.redirect("/urls")
 });
