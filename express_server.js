@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
@@ -21,19 +23,34 @@ app.get("/hello", (req, res) => {
 
 //  When sending variables to ejs template, it must be in an opbject
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase};
+  const templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
-
+  const templateVars = {
+    username: req.cookies["username"],
+  };
+  res.render("urls_new", templateVars);
 });
 
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = req.body.longURL;
   res.send("Ok");  // Respond with 'Ok' (we will replace this)
+});
+
+app.post("/login", (req, res) => {
+  res.cookie('username', req.body.username)
+  console.log(req.body.username)
+  
+  res.redirect("/urls")
+})
+
+app.post("/logout", (req, res) => { //need to clear the cookie and redirect to urls
+  // console.log(req.body.username)
+  res.clearCookie("username", req.body.username)
+  res.redirect("/urls")
 });
 
 app.get("/u/:shortURL", (req, res) => {

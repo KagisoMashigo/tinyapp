@@ -7,7 +7,18 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>    
+        <% if(username){ %>
+          <form class="form-inline" method="POST" action="/logout"><!--Form seems like its off-->
+          <button type="submit" class="btn btn-primary">Logout</button>
+          <div type="text">Logged in as: <%= username %></div>
+          </form>
+        <% } else{ %>  
+          <form class="d-flex justify-content-end" method="POST" action="/login"> <!--Form seems like its off-->
+          <input placeholder="Username" class="form-control" type="text" name="username" style="width: 300px; margin: 0em"/> <!--input typically requires name and type, the rest is filler (aesthetics)-->
+          <button type="submit" class="btn btn-primary">Login, do it</button>
+          </form>
+       <% } %>
       </div>
     </div>
   </nav>
