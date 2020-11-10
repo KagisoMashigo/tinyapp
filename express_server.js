@@ -12,7 +12,7 @@ const urlDatabase = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Hello!");
+  res.send("Hello and welcome to TinyApp!!");
 });
 
 app.get("/hello", (req, res) => {
