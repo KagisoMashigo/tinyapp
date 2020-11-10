@@ -37,7 +37,7 @@ app.get("/urls/new", (req, res) => {
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = req.body.longURL;
-  res.send("Ok");  // Respond with 'Ok' (we will replace this)
+  res.send("Ok");  // tb replaced
 });
 
 app.post("/login", (req, res) => {
