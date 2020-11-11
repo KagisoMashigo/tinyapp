@@ -101,17 +101,23 @@ app.get("/register", (req, res) => {
   res.render("register", templateVars);
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", (req, res) => { 
   const userID = generateRandomString();
   users[userID] = { id: userID, email: req.body.email, password: req.body.password };
-  // console.log(users)
+  console.log(users[userID])
+  console.log(users)
   if (users[userID]["email"] && users[userID]["password"]) {
+    if (duplicateEmailFinder(users, users[userID])) {
     res.cookie("user_id", userID);
     res.redirect("/urls");
   } else {
-    res.status(400)
-    res.send("400 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
+    res.status(400);
+    res.send("Sorry, that email is taken already!")
   }
+  } else {
+    res.status(404)
+    res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
+  } 
 });
 
 app.post("/login", (req, res) => {
