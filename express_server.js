@@ -17,12 +17,12 @@ const users = {
   "userRandomID": {
     id: "userRandomID", 
     email: "user@example.com", 
-    password: "purple-monkey-dinosaur"
+    password: "hello"
   },
  "user2RandomID": {
     id: "user2RandomID", 
     email: "user2@example.com", 
-    password: "dishwasher-funk"
+    password: "hey"
   }
 }
 
@@ -104,8 +104,13 @@ app.post("/register", (req, res) => {
   const userID = generateRandomString();
   users[userID] = { id: userID, email: req.body.email, password: req.body.password };
   // console.log(users)
-  res.cookie("user_id", userID);
-  res.redirect("urls")
+  if (users[userID]["email"] && users[userID]["password"]) {
+    res.cookie("user_id", userID);
+    res.redirect("/urls");
+  } else {
+    res.status(400)
+    res.send("400 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
+  }
 });
 
 app.listen(PORT, () => {
