@@ -40,7 +40,7 @@ const users = {
 
 // Homepage GET route
 app.get("/", (req, res) => {
-  const userID = req.cookies["user_id"];
+  const userID = req.session["user_id"];
   const templateVars = { urls: urlDatabase, user: users[userID] };
   res.render("homepage", templateVars);
 });
@@ -80,7 +80,7 @@ app.get("/urls/new", (req, res) => { // here the browser requests a form
 app.get("/register", (req, res) => {
   const userID = req.session["user_id"];
   const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] }; // need specific more TVs here
-  res.render("user_registration", templateVars);
+  res.render("register", templateVars);
 });
 
 // Registration functionality
@@ -88,14 +88,15 @@ app.post("/register", (req, res) => {
   const newUserId = generateRandomString();
   const password1 = req.body.password;
   const hashedPassword = bcrypt.hashSync(password1, 10);
-  users[newUserId] = { id: newUserId, email: req.body.email, password: hashedPassword };
-  if (!users[newUserId]["email"] || !users[newUserId]["password"]) {
+  if (!req.body.email || !req.body.password) {
     res.status(404);
     res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.");
-  } else if (!duplicateEmailMatcher(users, users[newUserId])) {
+    console.log(req.body)
+  } else if (duplicateEmailMatcher(users, req.body.email)) {
     res.status(400);
     res.send("Sorry, that email is already taken! Let's give this another go eh?");
   } else {
+    users[newUserId] = { id: newUserId, email: req.body.email, password: hashedPassword };
     req.session["user_id"] = newUserId;
     res.redirect("/urls");
   }
@@ -180,3 +181,6 @@ app.get("/urls.json", (req, res) => {
 app.listen(PORT, () => {
   console.log(`TinyApp listening on port ${PORT}!`);
 });
+
+// BUGS
+// Can still remotely delete urls
