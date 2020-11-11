@@ -52,10 +52,49 @@ app.post("/urls", (req, res) => {
   res.send("Ok");  // tb replaced
 });
 
-app.post("/login", (req, res) => {
-  res.cookie('user_id', req.body["user_id"])
-  console.log(req.body["user_id"])
-  res.redirect("/urls")
+app.get("/register", (req, res) => {
+  const userID = req.cookies["user_id"];
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
+  res.render("register", templateVars);
+});
+
+app.post("/register", (req, res) => { 
+  const userID = generateRandomString();
+  users[userID] = { id: userID, email: req.body.email, password: req.body.password };
+  // console.log(users[userID])
+  //console.log(users)
+//console.log("User List: ", users)
+  if (!users[userID]["email"] || !users[userID]["password"]) {
+    res.status(404)
+    res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
+  } else if (duplicateEmailMatcher(users, users[userID])) {
+    res.status(400);
+    res.send("Sorry, that email is already taken! Let's give this another go eh?")
+  } else {
+    res.cookie("user_id", userID);
+    res.redirect("/urls");
+  } 
+  //console.log(users)
+});
+
+app.post("/login", (req, res) => { 
+  if (!accountMatcher(users, req.body.email, req.body.password)) {
+    // console.log(req.body.email)
+    // console.log(req.body.password)
+    // console.log(users)
+    res.status(403);
+    res.send("No account matching that one in the system! Soz.")
+  } else {
+    res.cookie("user_id", req.cookies["user_id"]) // how do we match the email to ID?
+    res.redirect("/urls")
+  }
+ 
+});
+
+app.get("/login", (req, res) => {
+  const userID = req.cookies["user_id"];
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
+  res.render("login_page", templateVars);
 });
 
 app.post("/logout", (req, res) => { //need to clear the cookie and redirect to urls
@@ -93,53 +132,6 @@ app.post("/urls/:shortURL/update", (req, res) => {
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
-});
-
-app.get("/register", (req, res) => {
-  const userID = req.cookies["user_id"];
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
-  res.render("register", templateVars);
-});
-
-app.post("/register", (req, res) => { 
-  const userID = generateRandomString();
-  users[userID] = { id: userID, email: req.body.email, password: req.body.password };
-  // console.log(users[userID])
-  //console.log(users)
-//console.log("User List: ", users)
-  if (!users[userID]["email"] || !users[userID]["password"]) {
-    res.status(404)
-    res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
-  } else if (duplicateEmailMatcher(users, users[userID])) {
-    res.status(400);
-    res.send("Sorry, that email is already taken! Let's give this another go eh?")
-  } else {
-    res.cookie("user_id", userID);
-    res.redirect("/urls");
-  } 
-  //console.log(users)
-});
-
-app.post("/login", (req, res) => {
-  if (!accountMatcher(users, req.body.email)) {
-    res.status(403);
-    res.send("No email matching that one in the system! Soz.");
-  } else {
-    const user = getUserByEmail(users, req.body.email);
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      req.session["user_id"] = user.id;
-      res.redirect("/urls");
-    } else {
-      res.status(403);
-      res.send("Passwords don't match! Soz.");
-    }
-  }
-});
-
-app.get("/login", (req, res) => {
-  const userID = req.cookies["user_id"];
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
-  res.render("login_page", templateVars);
 });
 
 app.listen(PORT, () => {
