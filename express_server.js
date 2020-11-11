@@ -36,8 +36,15 @@ app.get("/", (req, res) => {
 //  When sending variables to ejs template, it must be in an opbject
 app.get("/urls", (req, res) => {
   const userID = req.cookies["user_id"];
-  const templateVars = { urls: urlDatabase, user: users[userID] }; 
-  res.render("urls_index", templateVars);
+  //const urlID = urlDatabase[req.params.shortURL].longURL;
+  const templateVars = { urls: urlDatabase, user: users[userID] };
+  if (urlsForUserID(urlDatabase, userID)) {
+    console.log(userID)
+    res.render("urls_index", templateVars);
+  } else {
+    res.status(403);
+    res.send("Whoops, looks like you need to login or register to do this.")
+  }
 });
 
 app.get("/urls/new", (req, res) => { // here the browser requests a form
@@ -68,10 +75,14 @@ app.post("/register", (req, res) => {
   // console.log(users[userID])
   //console.log(users)
 //console.log("User List: ", users)
+console.log(users)
+
   if (!users[userID]["email"] || !users[userID]["password"]) {
     res.status(404)
     res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
-  } else if (duplicateEmailMatcher(users, users[userID])) {
+  } else if (duplicateEmailMatcher(users, req.body.email)) {
+    console.log(req.body.email)
+    console.log(users)
     res.status(400);
     res.send("Sorry, that email is already taken! Let's give this another go eh?")
   } else {
@@ -82,16 +93,23 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => { 
-  if (!accountMatcher(users, req.body.email, req.body.password)) {
+  if (!accountMatcher(users, req.body.email)) {
     // console.log(req.body.email)
-    // console.log(req.body.password)
     // console.log(users)
     res.status(403);
-    res.send("No account matching that one in the system! Soz.")
+    res.send("No email matching that one in the system! Soz.")
+    //console.log("Current Users", users)
+    //console.log(req.body.email, req.body.password, users.user2RandomID.email, users.user2RandomID.password )
   } else {
-    res.cookie("user_id", req.cookies["user_id"]) // how do we match the email to ID?
-    res.redirect("/urls")
-  }
+    const user = getUserByEmail(users, req.body.email);
+    if (user.password === req.body.password) {
+      res.cookie("user_id", user.id)
+      res.redirect("/urls")
+    } else {
+      res.status(403);
+      res.send("Passwords don't match! Soz.")
+    }
+  } 
  
 });
 
@@ -103,7 +121,7 @@ app.get("/login", (req, res) => {
 
 app.post("/logout", (req, res) => { //need to clear the cookie and redirect to urls
   res.clearCookie("user_id", req.body["user_id"])
-  res.redirect("/urls")
+  res.redirect("/login")
 });
 
 app.get("/u/:shortURL", (req, res) => {

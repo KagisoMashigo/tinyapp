@@ -38,9 +38,9 @@ for (let user in userDB) {
 }
 
 // Used to check for duplicate emails
-const duplicateEmailMatcher = function(userDB, newUser) {
+const duplicateEmailMatcher = function(userDB, inputEmail) {
   for (let user in userDB) {
-    if (userDB[user]["email"] === newUser["email"]) {
+    if (userDB[user].email === inputEmail) {
       return true;
     }
   }
