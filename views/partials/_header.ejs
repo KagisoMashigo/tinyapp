@@ -1,21 +1,23 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/urls">TinyApp</a>
+    <a class="navbar-brand" href="/">TinyApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>    
-        <% if(username){ %>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>  
+        <a class="nav-item nav-link" href="/register">Register!</a>
+        
+        <% if(user){ %>
           <form class="form-inline" method="POST" action="/logout"><!--Form seems like its off-->
           <button type="submit" class="btn btn-primary">Logout</button>
-          <div type="text">Logged in as: <%= username %></div>
+          <div type="text">Logged in as: <%= user.email %></div>
           </form>
-        <% } else{ %>  
+        <% } else { %>  
           <form class="d-flex justify-content-end" method="POST" action="/login"> <!--Form seems like its off-->
-          <input placeholder="Username" class="form-control" type="text" name="username" style="width: 300px; margin: 0em"/> <!--input typically requires name and type, the rest is filler (aesthetics)-->
+          <input placeholder="Email" class="form-control" type="text" name="user_id" style="width: 300px; margin: 0em"/> <!--input typically requires name and type, the rest is filler (aesthetics)-->
           <button type="submit" class="btn btn-primary">Login, do it</button>
           </form>
        <% } %>
