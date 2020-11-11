@@ -9,17 +9,15 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>  
         <a class="nav-item nav-link" href="/register">Register!</a>
+        <a class="nav-item nav-link" href="/login">Login, do it!</a>
+
         
         <% if(user){ %>
           <form class="form-inline" method="POST" action="/logout"><!--Form seems like its off-->
           <button type="submit" class="btn btn-primary">Logout</button>
           <div type="text">Logged in as: <%= user.email %></div>
           </form>
-        <% } else { %>  
-          <form class="d-flex justify-content-end" method="POST" action="/login"> <!--Form seems like its off-->
-          <input placeholder="Email" class="form-control" type="text" name="user_id" style="width: 300px; margin: 0em"/> <!--input typically requires name and type, the rest is filler (aesthetics)-->
-          <button type="submit" class="btn btn-primary">Login, do it</button>
-          </form>
+
        <% } %>
       </div>
     </div>

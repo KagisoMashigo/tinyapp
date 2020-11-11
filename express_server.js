@@ -1,3 +1,4 @@
+const { generateRandomString, accountMatcher, duplicateEmailMatcher, getUserByEmail, urlsForUserID } = require("./helpers");
 const express = require("express");
 const app = express();
 const PORT = 8080;
@@ -113,12 +114,28 @@ app.post("/register", (req, res) => {
   }
 });
 
+app.post("/login", (req, res) => {
+  if (!accountMatcher(users, req.body.email)) {
+    res.status(403);
+    res.send("No email matching that one in the system! Soz.");
+  } else {
+    const user = getUserByEmail(users, req.body.email);
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      req.session["user_id"] = user.id;
+      res.redirect("/urls");
+    } else {
+      res.status(403);
+      res.send("Passwords don't match! Soz.");
+    }
+  }
+});
+
+app.get("/login", (req, res) => {
+  const userID = req.cookies["user_id"];
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
+  res.render("login_page", templateVars);
+});
+
 app.listen(PORT, () => {
   console.log(`TinyApp listening on port ${PORT}!`);
 });
-
-// Used to generate the user ID
-const generateRandomString = function() {
-  let formOutput = Math.random().toString(36).substring(2,8);
-  return formOutput;
-};
