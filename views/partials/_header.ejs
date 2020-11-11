@@ -13,11 +13,10 @@
 
         
         <% if(user){ %>
-          <form class="form-inline" method="POST" action="/logout"><!--Form seems like its off-->
-          <button type="submit" class="btn btn-primary">Logout</button>
-          <div type="text">Logged in as: <%= user.email %></div>
+          <form method="POST" action="/logout"> <!--Form seems like its off-->
+            <%= user.email %>
+            <button type="submit" class="btn btn-Primary">Logout</button>
           </form>
-
        <% } %>
       </div>
     </div>
