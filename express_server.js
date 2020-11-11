@@ -104,20 +104,20 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => { 
   const userID = generateRandomString();
   users[userID] = { id: userID, email: req.body.email, password: req.body.password };
-  console.log(users[userID])
-  console.log(users)
-  if (users[userID]["email"] && users[userID]["password"]) {
-    if (duplicateEmailFinder(users, users[userID])) {
-    res.cookie("user_id", userID);
-    res.redirect("/urls");
-  } else {
-    res.status(400);
-    res.send("Sorry, that email is taken already!")
-  }
-  } else {
+  // console.log(users[userID])
+  //console.log(users)
+//console.log("User List: ", users)
+  if (!users[userID]["email"] || !users[userID]["password"]) {
     res.status(404)
     res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.")
+  } else if (duplicateEmailMatcher(users, users[userID])) {
+    res.status(400);
+    res.send("Sorry, that email is already taken! Let's give this another go eh?")
+  } else {
+    res.cookie("user_id", userID);
+    res.redirect("/urls");
   } 
+  //console.log(users)
 });
 
 app.post("/login", (req, res) => {
