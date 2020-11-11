@@ -14,8 +14,8 @@ app.use(cookieSession({
 
 // Database containing url data
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b2xVn2": { longURL: "http://www.lighthouselabs.ca", userID: "userRandomID" },
+  "9sm5xK": { longURL: "http://www.google.com", userID: "user2RandomID" }
 };
 
 // Bcyrpt passwords
@@ -25,18 +25,18 @@ const password2 = "hello";
 const hashedPassword2 = bcrypt.hashSync(password2, 10);
 
 // Database containing user data
-const users = { 
+const users = {
   "userRandomID": {
-    id: "userRandomID", 
-    email: "user@example.com", 
-    password: "hello"
+    id: "userRandomID",
+    email: "user@example.com",
+    password: hashedPassword
   },
- "user2RandomID": {
-    id: "user2RandomID", 
-    email: "user2@example.com", 
-    password: "hey"
+  "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: hashedPassword2
   }
-}
+};
 
 // Homepage GET route
 app.get("/", (req, res) => {
