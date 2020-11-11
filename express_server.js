@@ -43,7 +43,7 @@ app.post("/urls", (req, res) => {
 app.post("/login", (req, res) => {
   res.cookie('username', req.body.username)
   res.redirect("/urls")
-})
+});
 
 app.post("/logout", (req, res) => { //need to clear the cookie and redirect to urls
   res.clearCookie("username", req.body.username)
@@ -89,4 +89,4 @@ app.listen(PORT, () => {
 const generateRandomString = function() {
   let formOutput = Math.random().toString(36).substring(2,8);
   return formOutput;
-}
+};
