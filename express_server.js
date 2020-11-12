@@ -67,7 +67,7 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
-// new urls page
+// New urls page
 app.get("/urls/new", (req, res) => { 
   const userID = req.session["user_id"];
   const templateVars = { user: users[userID] };
@@ -81,7 +81,7 @@ app.get("/urls/new", (req, res) => {
 // GET route for registering
 app.get("/register", (req, res) => {
   const userID = req.session["user_id"];
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] }; // need specific more TVs here
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userID] };
   res.render("register", templateVars);
 });
 
@@ -134,7 +134,7 @@ app.post("/logout", (req, res) => {
 
 // Newly created url edit link
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL].longURL; // this is a good example of how to get into the object
+  const longURL = urlDatabase[req.params.shortURL].longURL; 
   if (longURL) {
     res.redirect(longURL);
   } else {
@@ -142,15 +142,15 @@ app.get("/u/:shortURL", (req, res) => {
   }
 });
 
-// Checks if user authorised to delete
+// Checks if user authorised to access url
 app.get("/urls/:shortURL", (req, res) => {
   const userID = req.session["user_id"];
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL, user: users[userID] }; // here the browser looks up the longURL from the database where it was previously stored, passes the short and long url to the template
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL, user: users[userID] };
   if (urlsForUserID(urlDatabase, userID)) {
     res.render("urls_show", templateVars);
   } else {
     res.status(403);
-    res.send("Cant delete that.");
+    res.send("Cant access that.");
   }
 });
 
@@ -168,7 +168,7 @@ app.delete('/urls/:shortURL', (req, res) => {
 
 // Allows for url editing
 app.put("/urls/:shortURL", (req, res) => {
-  urlDatabase[req.params.shortURL].longURL = req.body.longURL; // everytime you submit a form the data will be available in req.body. If you need to grab data from the url it is in req.params.
+  urlDatabase[req.params.shortURL].longURL = req.body.longURL;
   res.redirect("/urls");
 });
 
@@ -179,5 +179,5 @@ app.get("/api/urls.json", (req, res) => {
 
 // Listening to the server
 app.listen(PORT, () => {
-  console.log(`TinyApp listening on port ${PORT}!`);
+  console.log(`TinyApp server listening on port ${PORT}!`);
 });
