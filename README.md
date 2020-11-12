@@ -6,15 +6,15 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 !["Screenshot of homepage"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/homepage.png?raw=true)
 
-!["Screenshot of login page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/login-page.png?raw=true)
+!["Screenshot of registration page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/register-page.png?raw=true)
 
 !["Screenshot of create url page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/create-url.png?raw=true)
-
-!["Screenshot of registration page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/register-page.png?raw=true)
 
 !["Screenshot of my urls page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/my-urls-page.png?raw=true)
 
 !["Screenshot of edit url page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/edit-url.png?raw=true)
+
+!["Screenshot of login page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/login-page.png?raw=true)
 
 
 ## Dependencies
