@@ -3,10 +3,10 @@ const express = require("express");
 const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 const app = express();
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 const PORT = 8080;
 const cookieSession = require('cookie-session');
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
@@ -68,7 +68,7 @@ app.post("/urls", (req, res) => {
 });
 
 // New urls page
-app.get("/urls/new", (req, res) => { 
+app.get("/urls/new", (req, res) => {
   const userID = req.session["user_id"];
   const templateVars = { user: users[userID] };
   if (userID) {
@@ -134,7 +134,7 @@ app.post("/logout", (req, res) => {
 
 // Newly created url edit link
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL].longURL; 
+  const longURL = urlDatabase[req.params.shortURL].longURL;
   if (longURL) {
     res.redirect(longURL);
   } else {
