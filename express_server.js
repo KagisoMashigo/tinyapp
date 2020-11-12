@@ -86,12 +86,10 @@ app.get("/register", (req, res) => {
 // Registration functionality
 app.post("/register", (req, res) => {
   const userID = generateRandomString();
-  // const password1 = req.body.password;
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   if (!req.body.email || !req.body.password) {
     res.status(404);
     res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.");
-    console.log(req.body)
   } else if (duplicateEmailMatcher(users, req.body.email)) {
     res.status(400);
     res.send("Sorry, that email is already taken! Let's give this another go eh?");
@@ -157,7 +155,7 @@ app.get("/urls/:shortURL", (req, res) => {
 // Delete button functionality
 app.post('/urls/:shortURL/delete', (req, res) => {
   const userID = req.session["user_id"];
-  if (urlsForUserID(urlDatabase, userID)) {
+  if (urlsForUserID(urlDatabase, userID)[req.params.shortURL].userID === userID) {
     delete urlDatabase[req.params.shortURL];
     res.redirect('/urls');
   } else {
@@ -183,4 +181,3 @@ app.listen(PORT, () => {
 });
 
 // BUGS
-// Can still remotely delete urls
