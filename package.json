@@ -1,8 +1,8 @@
 {
   "name": "tinyapp",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "TinyApp is a full stack web application built with Node and Express that allows users to shorten long URLs",
+  "main": "express_server.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
     "start": "./node_modules/.bin/nodemon -L express_server.js"
@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/KagisoMashigo/tinyapp.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["express", "ejs", "javascript", "html"],
+  "author": "Kagiso Mashigo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/KagisoMashigo/tinyapp/issues"
