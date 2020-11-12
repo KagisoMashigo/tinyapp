@@ -1,5 +1,5 @@
 {
-  "name": "tinyappV2",
+  "name": "tinyapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,22 +9,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KagisoMashigo/tinyappV2.git"
+    "url": "git+https://github.com/KagisoMashigo/tinyapp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KagisoMashigo/tinyappV2/issues"
+    "url": "https://github.com/KagisoMashigo/tinyapp/issues"
   },
-  "homepage": "https://github.com/KagisoMashigo/tinyappV2#readme",
+  "homepage": "https://github.com/KagisoMashigo/tinyapp#readme",
   "dependencies": {
     "bcrypt": "2.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "method-override": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

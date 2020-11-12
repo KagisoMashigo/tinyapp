@@ -3,6 +3,7 @@ const express = require("express");
 const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 const app = express();
+const methodOverride = require('method-override')
 const PORT = 8080;
 const cookieSession = require('cookie-session');
 app.set('view engine', 'ejs');
