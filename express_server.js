@@ -85,9 +85,9 @@ app.get("/register", (req, res) => {
 
 // Registration functionality
 app.post("/register", (req, res) => {
-  const newUserId = generateRandomString();
-  const password1 = req.body.password;
-  const hashedPassword = bcrypt.hashSync(password1, 10);
+  const userID = generateRandomString();
+  // const password1 = req.body.password;
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   if (!req.body.email || !req.body.password) {
     res.status(404);
     res.send("404 - SOMTHING'S MISSING, TRY AGAIN BUDDY.");
@@ -96,8 +96,8 @@ app.post("/register", (req, res) => {
     res.status(400);
     res.send("Sorry, that email is already taken! Let's give this another go eh?");
   } else {
-    users[newUserId] = { id: newUserId, email: req.body.email, password: hashedPassword };
-    req.session["user_id"] = newUserId;
+    users[userID] = { id: userID, email: req.body.email, password: hashedPassword };
+    req.session["user_id"] = userID;
     res.redirect("/urls");
   }
 });
@@ -172,8 +172,8 @@ app.post("/urls/:shortURL/update", (req, res) => {
   res.redirect("/urls");
 });
 
-// Parses the url data
-app.get("/urls.json", (req, res) => {
+// Parses the url data for api in json format
+app.get("/api/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
