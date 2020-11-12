@@ -16,6 +16,10 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 !["Screenshot of login page"](https://github.com/KagisoMashigo/tinyapp/blob/master/docs/login-page.png?raw=true)
 
+## Getting Started
+
+- Install all dependencies (using the `npm install` command).
+- Run the development web server using the `node express_server.js or npm start if using nodemon` command.
 
 ## Dependencies
 
@@ -25,8 +29,12 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - bcrypt
 - body-parser
 - cookie-session
+- method-override
 
-## Getting Started
+# Dev Dependencies
 
-- Install all dependencies (using the `npm install` command).
-- Run the development web server using the `node express_server.js or npm start if using nodemon` command.
+- mocha
+- chai
+- nodemon
+
+Have fun shortening them URLs!
