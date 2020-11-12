@@ -18,10 +18,10 @@ const accountMatcher = function(userDB, newUserEmail) {
 const urlsForUserID = function(urlDB, currentUser) {
   const urlResult = {}; 
   for (let url in urlDB) {
-    if (currentUser && urlDB[url]["userID"] === currentUser) {
+    if (currentUser && urlDB[url].userID === currentUser) {
       urlResult[url] = {
-        longURL: urlDB[url]["longURL"],
-        userID: urlDB[url]["userID"]
+        longURL: urlDB[url].longURL,
+        userID: urlDB[url].userID
       }
     }
   }
@@ -29,7 +29,7 @@ const urlsForUserID = function(urlDB, currentUser) {
 }
 
 // Used to idetify users by email addy
-const getUserByEmail = function(userDB, email) { // good practice to use dot notation rather than bracket
+const getUserByEmail = function(userDB, email) { 
 for (let user in userDB) {
     if (userDB[user].email === email) {
       return userDB[user];

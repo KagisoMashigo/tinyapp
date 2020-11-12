@@ -60,17 +60,17 @@ app.get("/urls", (req, res) => {
 
 // urls page POST
 app.post("/urls", (req, res) => {
-  const shortURL = generateRandomString(); // shortURL is the output after form submission; being the random string
-  urlDatabase[shortURL] = { longURL: req.body.longURL, userID: req.session["user_id"]}; // .body can be used by POST reqs but not GET reqs // longURL is the key in the database where output is stored
-  res.redirect(`/urls/${shortURL}`); // here the output is rediredted to urls/randomString where it is not found error 303 so browser looks in "response header"
+  const shortURL = generateRandomString();
+  urlDatabase[shortURL] = { longURL: req.body.longURL, userID: req.session["user_id"]};
+  res.redirect(`/urls/${shortURL}`);
 });
 
 // new urls page
-app.get("/urls/new", (req, res) => { // here the browser requests a form
+app.get("/urls/new", (req, res) => { 
   const userID = req.session["user_id"];
   const templateVars = { user: users[userID] };
   if (userID) {
-    res.render("urls_new", templateVars); // server then consults the urls_new template to get the html info and sends it back to the browser where it is then rendered
+    res.render("urls_new", templateVars);
   } else {
     res.redirect("/login");
   }
