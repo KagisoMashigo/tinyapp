@@ -6,6 +6,7 @@ const app = express();
 const methodOverride = require('method-override')
 const PORT = 8080;
 const cookieSession = require('cookie-session');
+app.use(methodOverride('_method'))
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
@@ -154,7 +155,7 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 // Delete button functionality
-app.post('/urls/:shortURL/delete', (req, res) => {
+app.delete('/urls/:shortURL', (req, res) => {
   const userID = req.session["user_id"];
   if (urlsForUserID(urlDatabase, userID)[req.params.shortURL].userID === userID) {
     delete urlDatabase[req.params.shortURL];
@@ -166,7 +167,7 @@ app.post('/urls/:shortURL/delete', (req, res) => {
 });
 
 // Allows for url editing
-app.post("/urls/:shortURL/update", (req, res) => {
+app.put("/urls/:shortURL", (req, res) => {
   urlDatabase[req.params.shortURL].longURL = req.body.longURL; // everytime you submit a form the data will be available in req.body. If you need to grab data from the url it is in req.params.
   res.redirect("/urls");
 });

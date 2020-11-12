@@ -18,7 +18,7 @@
       <div>
       <div class="card-header">
         <h5 class="card-title"><strong>Edit exisiting URL?</strong></h5>
-          <form class="row justify-content-center" method="POST" action="/urls/<%= shortURL%>/update"> 
+          <form class="row justify-content-center" method="POST" action="/urls/<%= shortURL%>?_method=PUT"> 
             <span class="mt-4">New URL:</span>
             <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
             <button type="submit" class="btn btn-info h-75 mt-3">Submit</button>
