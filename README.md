@@ -31,7 +31,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
 - cookie-session
 - method-override
 
-# Dev Dependencies
+## Dev Dependencies
 
 - mocha
 - chai
